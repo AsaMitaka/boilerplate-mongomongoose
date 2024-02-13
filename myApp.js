@@ -5,24 +5,23 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 const personSchema = new mongoose.Schema({
   name: String,
   age: Number,
-  favoriteFoods: [String],
+  favoriteFoods: Array,
 });
 
 const Person = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = () => {
-  const newPerson = new Person({
-    name: 'Aymi',
-    age: 5,
-    favoriteFoods: ['cheese', 'wallnut'],
+  const person = new Person({
+    name: 'John Doe',
+    age: 87,
+    favoriteFoods: ['something', 'something'],
   });
 
-  newPerson.save((err) => {
+  person.save(function (err, data) {
     if (err) {
-      console.error('Error saving person:', err);
-    } else {
-      console.log('Person successfully saved');
+      console.log(err);
     }
+    console.log(data);
   });
 };
 
