@@ -62,19 +62,16 @@ const findEditThenSave = (personId, done) => {
   const foodToAdd = 'hamburger';
 
   Person.findOneAndUpdate(
-    { _id: personId }, // Search by _id
-    { $push: { favoriteFoods: foodToAdd } }, // Add "hamburger" to favoriteFoods
-    { new: true }, // Return the updated document
+    { _id: personId },
+    { $push: { favoriteFoods: foodToAdd } },
+    { new: true },
     (err, updatedPerson) => {
       if (err) return console.error(err);
 
-      // If favoriteFoods field is of Mixed type, manually mark it as modified
       updatedPerson.markModified('favoriteFoods');
-
-      // Save the updated document
       updatedPerson.save((err, savedPerson) => {
         if (err) return console.error(err);
-        done(null, savedPerson); // Return the updated document
+        done(null, savedPerson);
       });
     },
   );
@@ -99,13 +96,23 @@ const removeById = (personId, done) => {
 const removeManyPeople = (done) => {
   const nameToRemove = 'Mary';
 
-  done(null /*, data*/);
+  Person.remove({ name: nameToRemove }, (err, result) => {
+    if (err) return console.error(err);
+    done(null, result);
+  });
 };
 
 const queryChain = (done) => {
   const foodToSearch = 'burrito';
 
-  done(null /*, data*/);
+  Person.find({ favoriteFoods: foodToSearch })
+    .sort('name')
+    .limit(2)
+    .select('-age')
+    .exec((err, data) => {
+      if (err) return console.error(err);
+      done(null, data);
+    });
 };
 
 /** **Well Done !!**
