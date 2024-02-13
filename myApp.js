@@ -17,7 +17,7 @@ const createAndSavePerson = (name, age, favoriteFoods) => {
     favoriteFoods,
   });
 
-  newPerson.save(function (err, data) {
+  newPerson.save((err, data) => {
     if (err) {
       console.error(err);
     } else {
@@ -25,6 +25,9 @@ const createAndSavePerson = (name, age, favoriteFoods) => {
     }
   });
 };
+
+// Example usage:
+createAndSavePerson('John', 30, ['Pizza', 'Burger']);
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
