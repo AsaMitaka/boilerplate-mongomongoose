@@ -60,15 +60,24 @@ const findPersonById = (personId, done) => {
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = 'hamburger';
-  const person = Person.findOneAndUpdate(
-    { id: personId },
-    { favoriteFoods: [...favoriteFoods, foodToAdd] },
-  );
 
-  person.save(function (err, data) {
-    if (err) return console.log(err);
-    done(null, data);
-  });
+  Person.findOneAndUpdate(
+    { _id: personId }, // Search by _id
+    { $push: { favoriteFoods: foodToAdd } }, // Add "hamburger" to favoriteFoods
+    { new: true }, // Return the updated document
+    (err, updatedPerson) => {
+      if (err) return console.error(err);
+
+      // If favoriteFoods field is of Mixed type, manually mark it as modified
+      updatedPerson.markModified('favoriteFoods');
+
+      // Save the updated document
+      updatedPerson.save((err, savedPerson) => {
+        if (err) return console.error(err);
+        done(null, savedPerson); // Return the updated document
+      });
+    },
+  );
 };
 
 const findAndUpdate = (personName, done) => {
