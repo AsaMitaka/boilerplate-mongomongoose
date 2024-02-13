@@ -18,8 +18,11 @@ const createAndSavePerson = () => {
   });
 
   newPerson.save((err, data) => {
-    if (err) return console.error(err);
-    done(null, data);
+    if (err) {
+      console.error(err);
+    } else {
+      // done(null, data);
+    }
   });
 };
 
