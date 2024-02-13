@@ -10,7 +10,7 @@ const PersonSchema = mongoose.Schema({
 
 const Person = mongoose.model('Person', PersonSchema);
 
-const createAndSavePerson = (name, age, favoriteFoods) => {
+const createAndSavePerson = ({ name, age, favoriteFoods }) => {
   const newPerson = new Person({
     name,
     age,
@@ -25,9 +25,6 @@ const createAndSavePerson = (name, age, favoriteFoods) => {
     }
   });
 };
-
-// Example usage:
-createAndSavePerson('John', 30, ['Pizza', 'Burger']);
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
