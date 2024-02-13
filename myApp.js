@@ -52,18 +52,28 @@ const findOneByFood = (food, done) => {
 };
 
 const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findById(personId, function (err, data) {
+    if (err) return console.log(err);
+    done(null, data);
+  });
 };
 
 const findEditThenSave = (personId, done) => {
   const foodToAdd = 'hamburger';
+  const person = Person.findOneAndUpdate(
+    { id: personId },
+    { favoriteFoods: [...favoriteFoods, foodToAdd] },
+  );
 
-  done(null /*, data*/);
+  person.save(function (err, data) {
+    if (err) return console.log(err);
+    done(null, data);
+  });
 };
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
-
+  const person = Person.findOneAndUpdate({ name: personName }, { age: ageToSet });
   done(null /*, data*/);
 };
 
