@@ -22,6 +22,7 @@ const createAndSavePerson = () => {
       console.error(err);
     } else {
       // done(null, data);
+      console.log(data);
     }
   });
 };
