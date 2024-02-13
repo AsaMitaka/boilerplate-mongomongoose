@@ -11,7 +11,7 @@ const personSchema = mongoose.Schema({
 const Person = mongoose.model('Person', personSchema);
 
 const createAndSavePerson = (name, age, favoriteFoods) => {
-  const newPerson = PerformanceEntryrson({
+  const newPerson = Person({
     name,
     age,
     favoriteFoods,
